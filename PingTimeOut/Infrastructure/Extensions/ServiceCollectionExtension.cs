@@ -6,6 +6,9 @@ using System.IO;
 using System.Reflection;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using PingTimeOut.Services.Interfaces;
+using PingTimeOut.Services.Implementations;
 
 namespace PingTimeOut.Infrastructure.Extensions
 {
@@ -22,8 +25,14 @@ namespace PingTimeOut.Infrastructure.Extensions
 				c.SwaggerDoc("v1", new OpenApiInfo
 				{
 					Version = "v1",
-					Title = "Simple API",
-					Description = "___.\n\n"
+					Title = "Tools API",
+					Description = "Tools for deveopment",
+				});
+				c.SwaggerDoc("v2", new OpenApiInfo
+				{
+					Version = "v2",
+					Title = "Tools API",
+					Description = "Tools for deveopment",
 				});
 				// Указываем файл из которого брать комментарии для Swagger UI
 				var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -33,5 +42,12 @@ namespace PingTimeOut.Infrastructure.Extensions
 			});
 		}
 
+		/// <summary>Конфигурация сервисов</summary>
+		public static void ConfigureServices(this IServiceCollection services)
+		{
+			services.AddScoped<IPingService, PingService>();
+		}
+
 	}
+
 }
